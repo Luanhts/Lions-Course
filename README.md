@@ -1,2 +1,2 @@
-# Lions-Course
-Activities and projects of the Lions Dev Course
+# Lions
+###Activities and projects carried out in the classroom during the course at lions dev, a development startup in Ponta Grossa PR
