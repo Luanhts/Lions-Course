@@ -1,34 +1,44 @@
-console.log("Digite (C) para Celsius e (F) para Fahrenheit: ");
+console.log("Digite (C) para Celsius, (F) para Fahrenheit ou (K) para Kelvin:");
 
-// Função para tratar entrada de dados dependendo da opção escolhida
 function handleInput(option) {
-    console.log(`Digite o valor em ${option === 'C' ? 'Celsius' : 'Fahrenheit'} a ser convertido:`);
+    console.log(`Digite o valor em ${option === 'C' ? 'Celsius' : option === 'F' ? 'Fahrenheit' : 'Kelvin'} a ser convertido:`);
     
     process.stdin.once("data", function(data) {
         let num = parseFloat(data);
         if (isNaN(num)) {
             console.log("Valor inválido. Por favor, insira um número válido.");
-            handleInput(option); // Chama a função novamente para nova entrada
+            handleInput(option); 
             return;
         }
 
         switch (option) {
             case "C":
-                let result = (num * 1.8) + 32;
-                console.log(`O valor em Fahrenheit é: ${result}`);
+                let resultF = (num * 1.8) + 32;
+                let resultKToC = num + 273.15;
+                console.log(`O valor em Fahrenheit é: ${resultF}`);
+                console.log(`O valor em Kelvin é: ${resultKToC}`);
                 process.exit();
                 break;
 
             case "F":
-                let res = (num - 32) / 1.8;
-                console.log(`O valor em Celsius é: ${res}`);
+                let resultC = (num - 32) / 1.8;
+                let resultKToF = (num - 32) / 1.8 + 273.15;
+                console.log(`O valor em Celsius é: ${resultC}`);
+                console.log(`O valor em Kelvin é: ${resultKToF}`);
+                process.exit();
+                break;
+
+            case "K":
+                let resultCToK = num - 273.15;
+                let resultFToK = (num - 273.15) * 1.8 + 32;
+                console.log(`O valor em Celsius é: ${resultCToK}`);
+                console.log(`O valor em Fahrenheit é: ${resultFToK}`);
                 process.exit();
                 break;
         }
     });
 }
 
-// Função para lidar com a escolha da opção
 process.stdin.once("data", function(data) {
     let user = data.toString().trim().toUpperCase();
 
@@ -39,6 +49,10 @@ process.stdin.once("data", function(data) {
 
         case "F":
             handleInput("F");
+            break;
+
+        case "K":
+            handleInput("K");
             break;
 
         default:
