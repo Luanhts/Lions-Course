@@ -1,4 +1,4 @@
-var prompt = require('prompt-sync')();
+var prompt = require('prompt-sync');
 
 var num = prompt('Digite um número: ');
 var x = 1
