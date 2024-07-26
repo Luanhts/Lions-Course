@@ -1,17 +1,21 @@
+const prompt = require("prompt-sync")();
+
+const alunos = []
+
+
 const menu = () => {
-    console.log("-".repeat(10))
+    console.log("-".repeat(20))
     console.log("Cadastro de Alunos")
-    console.log("-".repeat(10))
+    console.log("-".repeat(20))
 
     console.log(`
     1. Criar
     2. Listar
     3. Atualizar
     4. Remover
-    5. Contar alunos de menor 
+    5. Verificar quantos são de maior ou de menor
     6. Sair`)
 }
-
 
 const modelo = () => {
     const nomeAluno = prompt("Nome do aluno: ");
@@ -57,12 +61,14 @@ const listar = () => {
         };
 
 const remover = () => {
-            const indice =
-            parseInt(prompt("Qual indice você deseja remover? "), 10) - 1;
-            alunos.splice(aluno);
-            console.log("Jogo removido com sucesso");
-            console.log(alunos);
-    
+            const indice = parseInt(prompt("Qual indice você deseja remover? "), 10) - 1;
+            alunos.splice(indice);
+            console.log("Aluno removido com sucesso");
+            if(alunos.length == 0){
+                console.log("Nenhum aluno cadastrado ")
+            }else{
+                console.log(alunos);
+            }
         };
 
 const atualizar = () => {
@@ -87,4 +93,28 @@ const atualizar = () => {
                 }
             };
 
-module.exports = { menu, modelo, criar, listar, remover, atualizar }
+    const contagem = () => {
+        const anoAtual = new Date().getFullYear();
+        const idade = 18;
+        let i = 0;
+//----------------------Menor de Idade--------------------------------
+        alunos.forEach(alunos => {
+            if (anoAtual - alunos.dataNascimento < idade) {
+                i++;
+            }
+        });
+        console.log(`Número de alunos menores de ${idade} anos: ${i}`);
+//-----------------------Maior de Idade-------------------------------
+        alunos.forEach(alunos => {
+            if (anoAtual - alunos.dataNascimento > idade) {
+                i++;
+            }
+        });
+        console.log(`Número de alunos maiores de ${idade} anos: ${i}`);
+    };
+
+
+//--------------Export Funcs--------------
+module.exports = { menu, modelo, criar, listar, remover, atualizar, contagem }
+
+
