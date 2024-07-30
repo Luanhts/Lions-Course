@@ -1,126 +1,82 @@
 const prompt = require("prompt-sync")();
-const usuarios = [];
 
-let ultimoId = 1;
+const usuarios = []
 
-const emailValido = (email) => {
-  let valido = true;
+let finalId = 0
 
-  usuarios.forEach((usuario) => {
-    if (email == usuario.email) {
-      console.log("Email duplicado");
-      valido = false;
+const emailNaoDuplicado = email => {
+    return usuarios.find()
+} 
+
+const modelo = (id = ++finalId) => {
+
+    const nome = prompt("Digite um nome de usuário: ")
+    const email = prompt("Digite o e-mail desse usuário: ")
+const telefones = [];
+    while(true) {
+        const telefone = prompt("Digite um número de telefone do usuário ou S para sair: ")
+        if (telefone == "s") {
+            break;
+        }
+        telefones.push(telefone);
     }
-  });
-
-  return valido && email != "";
-};
-
-const modelo = (id) => {
-  console.log(id);
-
-  const nome = prompt("Digite o nome do usuário: ");
-  const email = prompt("Digite o email do usuário: ");
-  const telefones = [];
-
-  while (true) {
-    const telefone = prompt(
-      "Digite um número do usuário, ou digite 'sair' para encerrar: "
-    );
-
-    if (telefone == "sair") {
-      break;
-    }
-
-    telefones.push(telefone);
-  }
-
-  if (nome != "" && telefones.length > 0 && emailValido(email)) {
-    let usuario;
-    if (id != undefined) {
-      usuario = {
-        nome,
-        email,
-        telefones,
-        id,
-      };
-    } else {
-      usuario = {
-        nome,
-        email,
-        telefones,
-        id: ultimoId,
-      };
-
-      ultimoId++;
+    if(emailNaoDuplicado(email)) {
+        
+        return {
+            nome,
+            email,
+            telefones,
+            id,
+        }
+    }else{
+        console.log("Falha na operação")
     }
 
-    return usuario;
-  }
 
-  console.log("Os dados inseridos são inválidos");
+    const criar = () => {
+        const novo = modelo();
+
+        if(novo != undefined){
+            usuarios.push(novo);
+            console.log("Usuário criado com sucesso: ")
+        }
+    }
 };
 
-const criar = () => {
-  const usuario = modelo();
+const listar = () => {
+    usuarios.forEach(usuario => {
+        console.log(`
+        Id: ${usuario.id}
+        Nome: ${usuario.nome}
+        Email: ${usuario.email}`)
 
-  if (usuario != undefined) {
-    usuarios.push(usuario);
-  }
-};
-
-const ler = () => {
-  usuarios.forEach((usuario) => {
-    console.log(`
-            ID: ${usuario.id}
-            Nome: ${usuario.nome}
-            Email: ${usuario.email}
-            `);
-
-    console.log("Telefones: ");
-    usuario.telefones.forEach((telefone, indice) => {
-      console.log(`
-                    Telefone ${indice + 1}: ${telefone}
-                    `);
+        usuario.telefone.forEach((telefone, indice) => {
+            console.log(`Telefone ${indice + 1}: ${telefone}`);
+        }); 
     });
-  });
-};
+    return true;
 
-const atualizar = () => {
-  ler();
+}
+    const atualizar = () =>{
+        if(listar()) {
+            const id = prompt("Qual o id que deseja atualizar: ")
 
-  const id = prompt("Digite o id que deseja atualizar: ");
+            const novo = modelo(id)
 
-  const novo = modelo(id);
+            const indice = usuarios.findIndex(usuario => id == usuario.id)
 
-  usuarios.forEach((usuario, indice) => {
-    if(id == usuario.id) {
-        usuarios[indice] = novo
-    }
-  })
-
-};
-
-const remover = () => {
-    ler();
-
-    const id = prompt("Digite o id que deseja remover: ");
-
-    usuarios.forEach((usuario, indice) => {
-        if(id == usuario.id) {
-            const confirma = prompt("Deseja realmente remover? s para sim.")
-            if(confirma == "s") {
-                usuarios.splice(indice, 1)
-                console.log("Usuario removido")
+            if(indice != -1){
+                usuarios[indice] = novo
+            } else {
+                console.log("Id inexistente")
             }
         }
-      })
+    }
 
-}
+    const remover = () => {
+        if(listar()) {
+            const id = prompt("Qual o id que remover: ")
 
-module.exports = {
-    criar,
-    ler,
-    atualizar,
-    remover
-}
+            const indice = usuarios.findIndex(usuario => id == usuario.id)
+        }
+    }
