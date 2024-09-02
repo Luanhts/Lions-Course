@@ -1,0 +1,1 @@
+const franquia_controller = require("../")

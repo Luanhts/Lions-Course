@@ -115,6 +115,6 @@ const atualizar = () => {
 
 
 //--------------Export Funcs--------------
-module.exports = { menu, modelo, criar, listar, remover, atualizar, contagem }
+module.exports = { menu, criar, listar, remover, atualizar, contagem }
 
 
