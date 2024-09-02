@@ -1,6 +1,8 @@
 const  express = require("express");
 const cep_endereco = require("./src/middlewares/cep_endereco");
 const mercado_controller = require("./src/controllers/mercado_controller");
+const usuario_router = require("./routes/usuario.js");
+
 const app = express();
 const port = 3000;
 
