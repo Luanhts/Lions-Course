@@ -1,4 +1,4 @@
-const model = require("../models/mercado.js")
+const model = require("../models/fornecedor.js")
 
 const db = []
 

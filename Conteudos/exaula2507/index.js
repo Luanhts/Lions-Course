@@ -2,7 +2,6 @@ const prompt = require("prompt-sync")();
 
 const { menu, modelo, criar, listar, remover, atualizar, contagem } = require("./cadastros")
 
-
 const main = () => {
     while(true){
         menu(); // Exibe o menu
