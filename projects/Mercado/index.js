@@ -1,40 +1,20 @@
-const  express = require("express");
-const cep_endereco = require("./src/middlewares/cep_endereco");
-const mercado_controller = require("./src/controllers/mercado_controller");
-const usuario_router = require("./routes/usuario.js");
-
+const express = require("express")
+const cep_endereco = require("./middlewares/cep_endereco.js")
+const mercado_controller = require("./controllers/mercado.js")
+const mercado_router = require("./routes/mercado.js")
+const fornecedor_router = require("./routes/fornecedor.js")
+const produto_router = require("./routes/produto.js")
 const app = express();
-const port = 3000;
+const port = 9900
 
-app.use(express.json());
+app.use(express.json())
 
-app.post("/merc", cep_endereco, (req, res) => {
-    res.json(req.body);
-})
+app.use("/mercado", mercado_router)
 
-app.get("/mercado/", (req, res) => {
-    res.json(mercado_controller.index())
-})
+app.use("/fornecedor", fornecedor_router)
 
-app.get("/mercado/:id", (req,res) =>{
-    res.json(mercado_controller.show(req.params.id))
-})
-
-app.post("/mercado", (req,res) => {
-    const code = mercado_controller.store(req.body)
-    res.status(code).json()
-})
-
-app.put("/cliente/:id", (req,res) => {
-    const code = mercado_controller.update(req.body, req.params.id)
-    res.status(code).json()
-})
-
-app.delete("/cliente/:id", (req, res) => {
-    mercado_controller.destroy(req.params.id)
-    res.json()
-})
+app.use("/produto", produto_router)
 
 app.listen(port, () => {
-    console.log(`Iniciou em https://localhost:${port}`)
+    console.log(`Server running in ${port} port`)
 })

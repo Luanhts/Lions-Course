@@ -1,27 +1,28 @@
 const express = require("express");
-const usuario_controller = require("../controllers/mercado_controller")
-const router = express.Router();
+const cep_endereco = require("../middlewares/cep_endereco.js");
+const router = express.Router()
+const mercado_controller = require("../controllers/mercado.js")
 
 router.get("/", (req, res) => {
-    res.json(usuario_controller.index())
+    res.json(mercado_controller.index())
 })
 
 router.get("/:id", (req, res) => {
-    res.json(usuario_controller.show(req.params.id))
+    res.json(mercado_controller.show(req.params.id))
 })
 
-router.post("/", (req, res) => {
-    const code = usuario_controller.store(req.body)
+router.post("/", cep_endereco, (req, res) => {
+    const code = mercado_controller.store(req.body)
     res.status(code).json()
 })
 
 router.put("/:id", (req, res) => {
-    const code = usuario_controller.update(req.body, req.params.id)
+    const code = mercado_controller.update(req.body, req.params.id)
     res.status(code).json()
 })
 
 router.delete("/:id", (req, res) => {
-    usuario_controller.destroy(req.params.id)
+    mercado_controller.destroy(req.params.id)
     res.json()
 })
 
